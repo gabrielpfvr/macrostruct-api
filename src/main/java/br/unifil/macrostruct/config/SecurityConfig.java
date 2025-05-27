@@ -31,12 +31,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http,
                                                    CorsConfigurationSource corsConfigurationSource) throws Exception {
-        String[] permitAll = {"/auth", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/error"};
+        String[] permitAll = {"/auth", "/actuator/**", "/error"};
 
         return http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/check-token").authenticated()
                         .requestMatchers(permitAll).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers("/auth/check-token").authenticated()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))

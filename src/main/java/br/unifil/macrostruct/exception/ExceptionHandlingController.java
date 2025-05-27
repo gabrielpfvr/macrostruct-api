@@ -28,4 +28,10 @@ public class ExceptionHandlingController {
     public ErrorMessage handleBadCredentialsException(Exception ex) {
         return new ErrorMessage(ex.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    public ErrorMessage handleUserScoreException(ValidationException ex) {
+        return new ErrorMessage(ex.getMessage());
+    }
 }

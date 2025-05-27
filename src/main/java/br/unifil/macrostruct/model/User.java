@@ -1,5 +1,6 @@
 package br.unifil.macrostruct.model;
 
+import br.unifil.macrostruct.dto.UserRequest;
 import br.unifil.macrostruct.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -65,6 +66,15 @@ public class User implements UserDetails {
     @Override
     public boolean isAccountNonLocked() {
         return this.deactivatedAt == null;
+    }
+
+    public static User from(UserRequest userRequest) {
+        return User.builder()
+                .name(userRequest.getName())
+                .email(userRequest.getEmail())
+                .birthDate(userRequest.getBirthDate())
+                .role(Role.USER)
+                .build();
     }
 
 }
