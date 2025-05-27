@@ -3,6 +3,7 @@ package br.unifil.macrostruct.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,6 +14,12 @@ public class ExceptionHandlingController {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationServiceException.class)
     public ErrorMessage handleAuthenticationException(AuthenticationServiceException ex) {
+        return new ErrorMessage(ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(JwtException.class)
+    public ErrorMessage handleJwtException(JwtException ex) {
         return new ErrorMessage(ex.getMessage());
     }
 

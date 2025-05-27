@@ -35,6 +35,7 @@ public class SecurityConfig {
 
         return http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/auth/check-token").authenticated()
                         .requestMatchers(permitAll).permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
