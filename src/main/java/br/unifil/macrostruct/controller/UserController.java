@@ -1,6 +1,7 @@
 package br.unifil.macrostruct.controller;
 
 import br.unifil.macrostruct.dto.UserRequest;
+import br.unifil.macrostruct.service.UserResponse;
 import br.unifil.macrostruct.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +19,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody UserRequest dto) {
         this.userService.save(dto);
+    }
+
+    @GetMapping
+    public UserResponse getUserFromToken(@RequestHeader("Authorization") String token) {
+        return this.userService.getUserFromToken(token);
     }
 }

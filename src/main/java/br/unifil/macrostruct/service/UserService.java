@@ -15,6 +15,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
+    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
     public Optional<User> findByEmail(String email) {
@@ -37,5 +38,14 @@ public class UserService {
 
     private void setEncodedPassword(User user, String password) {
         user.setPassword(this.passwordEncoder.encode(password));
+    }
+
+    public UserResponse getUserFromToken(String token) {
+        token = token.substring(7);
+        String email = this.jwtService.extractUsername(token);
+        Optional<User> user = this.findByEmail(email);
+
+        return user.map(UserResponse::from)
+                .orElseThrow(() -> new ValidationException("Usuário não encontrado"));
     }
 }
