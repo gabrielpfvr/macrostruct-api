@@ -1,6 +1,7 @@
 package br.unifil.macrostruct.service;
 
 import br.unifil.macrostruct.dto.UserRequest;
+import br.unifil.macrostruct.dto.UserResponse;
 import br.unifil.macrostruct.exception.ValidationException;
 import br.unifil.macrostruct.model.User;
 import br.unifil.macrostruct.repository.UserRepository;

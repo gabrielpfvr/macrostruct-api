@@ -1,4 +1,4 @@
-package br.unifil.macrostruct.service;
+package br.unifil.macrostruct.dto;
 
 import br.unifil.macrostruct.model.User;
 import lombok.Builder;
