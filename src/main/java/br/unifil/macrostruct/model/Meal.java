@@ -31,5 +31,13 @@ public class Meal {
     )
     private List<FoodEntity> food;
 
-    private Integer order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "diet_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_meal_diet")
+    )
+    private Diet diet;
+
+    private Integer ordination;
 }

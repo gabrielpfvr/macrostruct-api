@@ -23,8 +23,16 @@ public class Diet {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany
+    @OneToMany(mappedBy = "diet")
     private List<Meal> meals;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_diet_user")
+    )
+    private User user;
 
     @Column(nullable = false)
     private Double weight;

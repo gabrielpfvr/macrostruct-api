@@ -1,6 +1,6 @@
 package br.unifil.macrostruct.model;
 
-import br.unifil.macrostruct.enums.Type;
+import br.unifil.macrostruct.dto.FoodEntityRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,11 +34,37 @@ public class FoodEntity {
     @Column(nullable = false)
     private Double totalFat;
 
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private Double calories;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type mainType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_food_user")
+    )
+    private User user;
+
+    public static FoodEntity from(FoodEntityRequest request, User user) {
+        FoodEntity food = new FoodEntity();
+        food.setDescription(request.getDescription());
+        food.setServingSize(request.getServingSize());
+        food.setCarbohydrates(request.getCarbohydrates());
+        food.setProtein(request.getProtein());
+        food.setTotalFat(request.getTotalFat());
+        food.setCalories(request);
+        food.setUser(user);
+
+        return food;
+    }
+
+    public void setCalories(FoodEntityRequest request) {
+        if (request.getCalories() != null) {
+            this.calories = request.getCalories();
+        } else {
+            this.calories = (request.getCarbohydrates() * 4) + (request.getProtein() * 4) + (request.getTotalFat() * 9);
+        }
+    }
 
 }
