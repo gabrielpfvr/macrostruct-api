@@ -1,11 +1,13 @@
 package br.unifil.macrostruct.service;
 
 import br.unifil.macrostruct.dto.UserRequest;
-import br.unifil.macrostruct.dto.UserResponse;
 import br.unifil.macrostruct.exception.ValidationException;
 import br.unifil.macrostruct.model.User;
 import br.unifil.macrostruct.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +43,12 @@ public class UserService {
         user.setPassword(this.passwordEncoder.encode(password));
     }
 
-    public UserResponse getUserFromToken(String token) {
-        token = token.substring(7);
-        String email = this.jwtService.extractUsername(token);
-        Optional<User> user = this.findByEmail(email);
-
-        return user.map(UserResponse::from)
-                .orElseThrow(() -> new ValidationException("Usuário não encontrado"));
+    public User getUserFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof UsernamePasswordAuthenticationToken authToken) {
+            return (User) authToken.getPrincipal();
+        } else {
+            throw new ValidationException("Usuário não encontrado.");
+        }
     }
 }

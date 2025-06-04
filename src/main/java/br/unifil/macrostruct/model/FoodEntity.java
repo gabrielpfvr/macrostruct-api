@@ -34,7 +34,6 @@ public class FoodEntity {
     @Column(nullable = false)
     private Double totalFat;
 
-    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private Double calories;
 
@@ -53,18 +52,10 @@ public class FoodEntity {
         food.setCarbohydrates(request.getCarbohydrates());
         food.setProtein(request.getProtein());
         food.setTotalFat(request.getTotalFat());
-        food.setCalories(request);
+        food.setCalories(request.getCalories());
         food.setUser(user);
 
         return food;
-    }
-
-    public void setCalories(FoodEntityRequest request) {
-        if (request.getCalories() != null) {
-            this.calories = request.getCalories();
-        } else {
-            this.calories = (request.getCarbohydrates() * 4) + (request.getProtein() * 4) + (request.getTotalFat() * 9);
-        }
     }
 
 }

@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/token")
-    public UserResponse getUserFromToken(@RequestHeader("Authorization") String token) {
-        return this.userService.getUserFromToken(token);
+    public UserResponse getUserFromToken() {
+        return UserResponse.from(this.userService.getUserFromToken());
     }
 }
