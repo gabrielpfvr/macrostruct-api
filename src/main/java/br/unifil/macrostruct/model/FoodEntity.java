@@ -58,4 +58,11 @@ public class FoodEntity {
         return food;
     }
 
+    public static FoodEntity fromUser(User user) {
+        FoodEntity food = new FoodEntity();
+        food.setUser(user);
+
+        return food;
+    }
+
 }

@@ -1,10 +1,15 @@
 package br.unifil.macrostruct.service;
 
+import br.unifil.macrostruct.dto.CustomPageRequest;
 import br.unifil.macrostruct.dto.FoodEntityRequest;
+import br.unifil.macrostruct.dto.FoodEntityResponse;
 import br.unifil.macrostruct.model.FoodEntity;
 import br.unifil.macrostruct.model.User;
 import br.unifil.macrostruct.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,4 +37,15 @@ public class FoodService {
         this.repository.saveAll(list);
     }
 
+    public PagedModel<FoodEntityResponse> findAllByUser(CustomPageRequest pageRequest) {
+        User user = this.userService.getUserFromToken();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        FoodEntity food = FoodEntity.fromUser(user);
+        Example<FoodEntity> example = Example.of(food, matcher);
+
+        return new PagedModel<>(this.repository.findAll(example, pageRequest)
+                .map(FoodEntityResponse::from));
+    }
 }

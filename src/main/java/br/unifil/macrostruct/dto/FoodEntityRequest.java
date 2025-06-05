@@ -17,5 +17,6 @@ public class FoodEntityRequest {
     private Double protein;
     @NotNull
     private Double totalFat;
+    @NotNull
     private Double calories;
 }

@@ -20,7 +20,7 @@ import java.util.Collections;
 @Builder
 @ToString(of = "id")
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "USERS")
 @Entity
