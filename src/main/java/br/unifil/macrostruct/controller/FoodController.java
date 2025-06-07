@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/food")
 @RequiredArgsConstructor
@@ -31,6 +33,11 @@ public class FoodController {
     @GetMapping
     public PagedModel<FoodEntityResponse> getAll(CustomPageRequest pageRequest) {
         return this.service.findAllByUser(pageRequest);
+    }
+
+    @GetMapping("/list")
+    public List<FoodEntityResponse> getAllList() {
+        return this.service.findAllList();
     }
 
 }

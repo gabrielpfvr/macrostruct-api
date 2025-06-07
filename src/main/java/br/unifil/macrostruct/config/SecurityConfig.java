@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http,
                                                    CorsConfigurationSource corsConfigurationSource) throws Exception {
-        String[] permitAll = {"/auth", "/actuator/**", "/error"};
+        String[] permitAll = {"/auth", "/actuator/health", "/error"};
 
         return http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

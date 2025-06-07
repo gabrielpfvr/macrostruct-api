@@ -48,4 +48,17 @@ public class FoodService {
         return new PagedModel<>(this.repository.findAll(example, pageRequest)
                 .map(FoodEntityResponse::from));
     }
+
+    public List<FoodEntityResponse> findAllList() {
+        User user = this.userService.getUserFromToken();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        FoodEntity food = FoodEntity.fromUser(user);
+        Example<FoodEntity> example = Example.of(food, matcher);
+
+        return this.repository.findAll(example).stream()
+                .map(FoodEntityResponse::from)
+                .toList();
+    }
 }

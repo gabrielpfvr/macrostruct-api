@@ -1,8 +1,10 @@
 package br.unifil.macrostruct.model;
 
+import br.unifil.macrostruct.dto.MealRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -23,13 +25,11 @@ public class Meal {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "food_meal",
-            joinColumns = @JoinColumn(name = "meal_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id")
-    )
-    private List<FoodEntity> food;
+    @Column(nullable = false)
+    private LocalTime time;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MealFood> foodList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -39,5 +39,21 @@ public class Meal {
     )
     private Diet diet;
 
+    @Column(nullable = false)
     private Integer ordination;
+
+    public static List<Meal> from(List<MealRequest> requestList) {
+        return requestList.stream()
+                .map(Meal::from)
+                .toList();
+    }
+
+    private static Meal from(MealRequest request) {
+        return Meal.builder()
+                .description(request.getDescription())
+                .time(request.getTime())
+                .foodList(MealFood.from(request.getFoodList()))
+                .ordination(request.getOrdination())
+                .build();
+    }
 }
