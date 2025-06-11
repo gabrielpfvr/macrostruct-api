@@ -64,6 +64,7 @@ public class SecurityConfig {
         corsConfig.addAllowedMethod("GET");
         corsConfig.addAllowedMethod("PUT");
         corsConfig.addAllowedMethod("POST");
+        corsConfig.addAllowedMethod("DELETE");
         corsConfig.addAllowedMethod("OPTIONS");
         corsConfig.addAllowedOriginPattern("*");
 

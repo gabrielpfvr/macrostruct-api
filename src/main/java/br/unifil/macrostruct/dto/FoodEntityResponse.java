@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 public class FoodEntityResponse {
 
+    private Integer id;
     private String description;
     private Integer servingSize;
     private Double carbohydrates;
@@ -17,6 +18,7 @@ public class FoodEntityResponse {
 
     public static FoodEntityResponse from(FoodEntity foodEntity) {
         return FoodEntityResponse.builder()
+                .id(foodEntity.getId())
                 .description(foodEntity.getDescription())
                 .servingSize(foodEntity.getServingSize())
                 .carbohydrates(foodEntity.getCarbohydrates())

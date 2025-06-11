@@ -13,6 +13,7 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -59,6 +60,11 @@ public class FoodService {
 
         return this.repository.findAll(example).stream()
                 .map(FoodEntityResponse::from)
+                .sorted(Comparator.comparing(FoodEntityResponse::getDescription))
                 .toList();
+    }
+
+    public void deleteByIds(List<Integer> ids) {
+        this.repository.deleteByIdIn(ids);
     }
 }

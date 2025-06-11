@@ -40,4 +40,9 @@ public class FoodController {
         return this.service.findAllList();
     }
 
+    @DeleteMapping("/delete-by-ids")
+    public void deleteByIds(@RequestParam List<Integer> ids) {
+        this.service.deleteByIds(ids);
+    }
+
 }

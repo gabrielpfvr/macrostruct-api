@@ -9,7 +9,6 @@ import br.unifil.macrostruct.model.User;
 import br.unifil.macrostruct.repository.DietRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.web.PagedModel;
@@ -57,5 +56,9 @@ public class DietService {
         this.repository.save(diet);
 
         return DietResponse.from(diet);
+    }
+
+    public void delete(Integer id) {
+        this.repository.deleteById(id);
     }
 }

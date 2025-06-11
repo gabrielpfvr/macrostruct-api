@@ -11,6 +11,8 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/diet")
 @RequiredArgsConstructor
@@ -37,5 +39,10 @@ public class DietController {
     @PutMapping("{id}")
     public DietResponse create(@PathVariable Integer id, @Valid @RequestBody DietRequest dietRequest) {
         return this.dietService.update(id, dietRequest);
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public void deleteByIds(@PathVariable Integer id) {
+        this.dietService.delete(id);
     }
 }
