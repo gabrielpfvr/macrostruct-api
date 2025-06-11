@@ -18,7 +18,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
-    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
     public Optional<User> findByEmail(String email) {
