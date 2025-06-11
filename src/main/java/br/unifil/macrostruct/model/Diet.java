@@ -25,7 +25,7 @@ public class Diet {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "diet", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "diet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals;
 
     @ManyToOne
@@ -65,5 +65,19 @@ public class Diet {
         diet.setUser(user);
 
         return diet;
+    }
+
+    public void update(DietRequest request) {
+        this.description = request.getDescription();
+        this.weight = request.getWeight();
+        this.height = request.getHeight();
+        this.tdee = request.getTdeee();
+
+        this.meals.clear();
+        List<Meal> newMeals = Meal.from(request.getMeals());
+        for (Meal meal : newMeals) {
+            meal.setDiet(this);
+            this.meals.add(meal);
+        }
     }
 }

@@ -9,6 +9,7 @@ import br.unifil.macrostruct.model.User;
 import br.unifil.macrostruct.repository.DietRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.web.PagedModel;
@@ -41,9 +42,20 @@ public class DietService {
                 .map(DietListResponse::from));
     }
 
-    public DietResponse findById(Integer id) {
+    public DietResponse getById(Integer id) {
+        return DietResponse.from(this.findById(id));
+    }
+
+    private Diet findById(Integer id) {
         return this.repository.findById(id)
-                .map(DietResponse::from)
                 .orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
+    }
+
+    public DietResponse update(Integer id, DietRequest request) {
+        Diet diet = this.findById(id);
+        diet.update(request);
+        this.repository.save(diet);
+
+        return DietResponse.from(diet);
     }
 }

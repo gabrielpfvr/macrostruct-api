@@ -23,10 +23,10 @@ public class LoginService {
         Optional<User> user = this.userService.findByEmail(loginRequest.getUsername());
 
         if (user.isEmpty() || !this.isPasswordCorrect(loginRequest, user.get())) {
-            throw new BadCredentialsException("Wrong username/password!");
+            throw new BadCredentialsException("Usuário/Senha incorretos!");
         }
         if (!user.get().isAccountNonLocked()) {
-            throw new AuthenticationServiceException("Inactive user, please contact an administrator");
+            throw new AuthenticationServiceException("Usuário inativo, por favor contate um administrador.");
         }
 
         String token = this.jwtService.generateToken(user.get());

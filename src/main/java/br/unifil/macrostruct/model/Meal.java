@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -45,7 +46,7 @@ public class Meal {
     public static List<Meal> from(List<MealRequest> requestList) {
         return requestList.stream()
                 .map(Meal::from)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private static Meal from(MealRequest request) {

@@ -31,6 +31,11 @@ public class DietController {
 
     @GetMapping("{id}")
     public DietResponse getById(@PathVariable Integer id) {
-        return this.dietService.findById(id);
+        return this.dietService.getById(id);
+    }
+
+    @PutMapping("{id}")
+    public DietResponse create(@PathVariable Integer id, @Valid @RequestBody DietRequest dietRequest) {
+        return this.dietService.update(id, dietRequest);
     }
 }

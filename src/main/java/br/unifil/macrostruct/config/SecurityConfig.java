@@ -62,7 +62,7 @@ public class SecurityConfig {
         corsConfig.applyPermitDefaultValues();
         corsConfig.setAllowCredentials(true);
         corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("PATCH");
+        corsConfig.addAllowedMethod("PUT");
         corsConfig.addAllowedMethod("POST");
         corsConfig.addAllowedMethod("OPTIONS");
         corsConfig.addAllowedOriginPattern("*");
