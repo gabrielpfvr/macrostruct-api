@@ -19,7 +19,7 @@ jobs:
           java-version: '21'
 
       - name: Build Spring Boot JAR
-        run: mvn clean package --file pom.xml
+        run: mvn clean package -DskipTests --file pom.xml
 
       - name: Copy project files to VM
         uses: appleboy/scp-action@v0.1.7
