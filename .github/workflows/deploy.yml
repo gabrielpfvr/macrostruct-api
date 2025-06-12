@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "."
-          target: "~/macrostruct"
+          target: "~/macrostruct-api"
 
       - name: Create .env file on VM
         uses: appleboy/ssh-action@v0.1.10
