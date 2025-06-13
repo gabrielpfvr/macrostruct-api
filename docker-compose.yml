@@ -22,7 +22,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       TZ: America/Sao_Paulo
     ports:
-      - "127.0.0.1:8080:80"
+      - "127.0.0.1:8085:8085"
     depends_on:
       - postgres
     networks:
@@ -52,6 +52,9 @@ services:
   traefik:
     image: traefik:v3.0.3
     command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.network=traefik-net"
       - "--core.defaultRuleSyntax=v2"
       - "--log.level=info"
       - "--accesslog=true"
