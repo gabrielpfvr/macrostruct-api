@@ -15,18 +15,18 @@ services:
     networks:
       - backend
 
-  pgadmin:
-    image: dpage/pgadmin4:8
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      TZ: America/Sao_Paulo
-    ports:
-      - "127.0.0.1:8085:8085"
-    depends_on:
-      - postgres
-    networks:
-      - backend
+#  pgadmin:
+#    image: dpage/pgadmin4:8
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+#      TZ: America/Sao_Paulo
+#    ports:
+#      - "127.0.0.1:8085:8085"
+#    depends_on:
+#      - postgres
+#    networks:
+#      - backend
 
   springboot:
     build:
@@ -98,4 +98,4 @@ volumes:
 networks:
   backend:
   traefik-net:
-    driver: bridge
+    external: true
